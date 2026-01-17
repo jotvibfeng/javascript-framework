@@ -1,45 +1,33 @@
 import { useEffect, useState } from 'react'
 
-function App() {
-  const [myValue, setMyValue] = useState(0)
-
-  function handleButtonClick() {
-    setMyValue((prevState) => prevState + 1)
-  }
-  function handleButtonClickDecrase() {
-    setMyValue((prevState) => prevState - 1)
-  }
-  function handleButtonClickRest() {
-    setMyValue(0)
-  }
-
+function Greeting() {
   useEffect(() => {
-    console.log('useEffect fired')
+    console.log('Greeting mounted')
+
+    return () => {
+      console.log('Greeting unmounted')
+    }
   }, [])
 
-  console.log('Render App component')
+  return <h1 className="underline-none">Hello, Bob!</h1>
+}
+
+function App() {
+  const [showGreeting, setShowGreeting] = useState(true)
 
   return (
-    <div className="text-3xl font-bold underline">
-      <div>{myValue}</div>
-      <button
-        onClick={handleButtonClick}
-        className="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded"
-      >
-        Increase +
-      </button>
-      <button
-        onClick={handleButtonClickDecrase}
-        className="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded"
-      >
-        Decrease -
-      </button>
-      <button
-        onClick={handleButtonClickRest}
-        className="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded"
-      >
-        Rest
-      </button>
+    <div className="text-3xl font-bold">
+      <div>
+        <button
+          className="bg-red-300 hover:bg-red-600 cursor-pointer active:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transform hover:scale-105 transition-all duration-200 ease-in-out"
+          onClick={() => {
+            setShowGreeting(false)
+          }}
+        >
+          Hide Greeting
+        </button>
+      </div>
+      <div>{showGreeting ? <Greeting /> : null} </div>
     </div>
   )
 }
